@@ -1,0 +1,45 @@
+Install AWS CLI latest version using below commands
+---------------------------------------------------
+sudo su -  jenkins
+sudo apt install unzip
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+aws --version
+
+Authenitcate AWS EC2 to Kubernetes 
+aws configure
+
+install kubectl using below commands
+---------------------------------------
+curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x ./kubectl 
+sudo mv ./kubectl /usr/local/bin
+kubectl version --short --client
+
+Install eksctl using below commands
+------------------------------------
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+sudo mv /tmp/eksctl /usr/local/bin 
+eksctl version
+
+Create Kubernetes Cluster (20 min)
+-------------------------
+eksctl create cluster --name javaexpress-new-cluster --version 1.29 --region ap-south-1 --nodegroup-name worker-nodes --node-type t2.micro --nodes 2
+
+Delete LoadBalancer
+-------------------
+kubectl delete svc <service-name> -n develop
+Example : kubectl delete svc springboot-svc -n develop
+
+Delete Kubernetes Cluster 
+-------------------------
+eksctl delete cluster --name <cluster-name>
+eksctl delete cluster --name javaexpress-new-cluster
+
+
+
+
+
+
+
